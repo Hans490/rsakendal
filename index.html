@@ -1,0 +1,2151 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Rumah Sakit Aisyiyah Kendal - Pelayanan Kesehatan Terpadu</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/alpinejs/3.10.2/cdn.min.js" defer></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.carousel.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/owl.theme.default.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+     <script>
+       tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          primary: '#00796B',  // Hijau Muhammadiyah yang lebih gelap
+          secondary: '#0097A7',  // Cyan kehijauan
+          accent: '#4CAF50',    // Hijau cerah Aisyiyah
+          dark: '#263238',
+          light: '#F5F9FF',
+        },
+      },
+    },
+  };
+    </script>
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+      .navbar-fixed {
+        @apply fixed shadow-lg bg-white/90 backdrop-blur-sm;
+        animation: navbar-fixed 0.5s;
+      }
+      @keyframes navbar-fixed {
+        0% {
+          transform: translateY(-100%);
+        }
+        100% {
+          transform: translateY(0);
+        }
+      }
+      .service-card:hover .service-icon {
+        background-color: #00796B;
+        color: white;
+        transform: translateY(-10px);
+      }
+      .service-card:hover {
+        box-shadow: 0 10px 25px rgba(0, 104, 183, 0.2);
+      }
+      .owl-carousel .owl-item img {
+        width: auto;
+        max-height: 600px;
+        margin: 0 auto;
+      }
+      .doctor-card:hover {
+        transform: translateY(-10px);
+        transition: transform 0.3s ease;
+      }
+      .doctor-card:hover .doctor-social {
+        opacity: 1;
+      }
+
+
+      @keyframes pulse-slow {
+    0%, 100% { opacity: 0.1; }
+    50% { opacity: 0.2; }
+  }
+  
+  .wave-animation {
+    animation: wave 2s linear infinite;
+  }
+  
+  @keyframes wave {
+    0% { transform: translateX(-100%); }
+    100% { transform: translateX(100%); }
+  }
+    </style>
+  </head>
+  <body class="font-sans">
+    <!-- Header -->
+   <header
+  class="bg-white w-full transition-all duration-300 z-50"
+  x-data="{ 
+    mobileMenuOpen: false, 
+    menuFixed: false,
+    profileDropdownOpen: false,
+    servicesDropdownOpen: false
+  }"
+  x-init="window.addEventListener('scroll', () => { menuFixed = window.scrollY > 50 })"
+  :class="{ 'navbar-fixed': menuFixed }"
+>
+  <div class="container mx-auto px-4 py-2">
+    <!-- Top Bar -->
+    <div class="flex flex-wrap justify-between items-center py-2 border-b border-gray-200">
+      <div class="flex items-center space-x-4">
+        <div class="flex items-center space-x-2 text-sm">
+          <i class="fas fa-phone-alt text-primary"></i>
+          <span>Gawat Darurat: <a href="tel:119" class="font-bold text-accent hover:underline">119</a></span>
+        </div>
+        <div class="hidden md:flex items-center space-x-2 text-sm">
+          <i class="fas fa-envelope text-primary"></i>
+          <a href="mailto:info@rsakendal.co.id" class="hover:text-primary">info@rsakendal.co.id</a>
+        </div>
+      </div>
+
+      <div class="flex items-center space-x-4">
+        <a href="#" class="text-primary hover:text-secondary transition-colors duration-300">
+          <i class="fab fa-facebook-f"></i>
+        </a>
+        <a href="#" class="text-primary hover:text-secondary transition-colors duration-300">
+          <i class="fab fa-instagram"></i>
+        </a>
+        <a href="#" class="text-primary hover:text-secondary transition-colors duration-300">
+          <i class="fab fa-twitter"></i>
+        </a>
+        <a href="#" class="text-primary hover:text-secondary transition-colors duration-300">
+          <i class="fab fa-youtube"></i>
+        </a>
+      </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="flex justify-between items-center py-4">
+      <!-- Kiri: Logo RS dan Nama RS -->
+      <div class="flex items-center space-x-4">
+        <!-- Logo RS -->
+        <img src="img/Logo RSA Final Terbaik.png" alt="Logo RS" class="h-10 w-auto" />
+
+        <!-- Nama RS -->
+        <a href="#" class="flex flex-col leading-tight">
+          <span class="text-2xl font-bold text-primary">
+            <span class="text-primary">Rumah Sakit</span>
+          </span>
+          <span class="text-lg font-bold text-primary">Aisyiyah Kendal</span>
+        </a>
+      </div>
+
+      <!-- Desktop Navigation with Dropdowns -->
+      <div class="hidden lg:flex space-x-8">
+        <a href="#home" class="font-medium text-dark hover:text-primary transition-colors duration-300">Beranda</a>
+        
+        <!-- Profile Dropdown -->
+       <!-- 1. Modifikasi tautan dropdown untuk mengirim parameter tab -->
+<div class="relative" @mouseover="profileDropdownOpen = true" @mouseleave="profileDropdownOpen = false">
+  <a href="#profile" class="font-medium text-dark hover:text-primary transition-colors duration-300 flex items-center">
+    Profil
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </a>
+ 
+  <!-- Profile Dropdown Menu -->
+  <div
+    x-show="profileDropdownOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 transform -translate-y-2"
+    x-transition:enter-end="opacity-100 transform translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 transform translate-y-0"
+    x-transition:leave-end="opacity-0 transform -translate-y-2"
+    class="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+  >
+    <div class="py-1">
+      <a href="profil.html?tab=general-info" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Informasi Umum</a>
+      <a href="profil.html?tab=history" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Sejarah</a>
+      <a href="profil.html?tab=vision-mission" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Visi & Misi</a>
+      <a href="profil.html?tab=quality-indicators" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Indikator Mutu</a>
+      <a href="profil.html?tab=organization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Struktur Organisasi</a>
+      <a href="profil.html?tab=accreditation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Akreditasi</a>
+    </div>
+  </div>
+</div>
+        
+        <!-- Services Dropdown -->
+        <div class="relative" @mouseover="servicesDropdownOpen = true" @mouseleave="servicesDropdownOpen = false">
+          <a href="#services" class="font-medium text-dark hover:text-primary transition-colors duration-300 flex items-center">
+            Layanan
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          
+          <!-- Services Dropdown Menu -->
+          <div 
+            x-show="servicesDropdownOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2"
+            class="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <div class="py-1">
+              <a href="#polyclinics" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Poliklinik</a>
+              <a href="#emergency" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Gawat Darurat</a>
+              <a href="#inpatient" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Rawat Inap</a>
+              <a href="#laboratory" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Laboratorium</a>
+              <a href="#radiology" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Radiologi</a>
+              <a href="#pharmacy" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Farmasi</a>
+              <a href="#medical-checkup" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Medical Check-Up</a>
+              <a href="#ambulance" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Ambulans</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Doctors Dropdown -->
+        <div class="relative" @mouseover="doctorsDropdownOpen = true" @mouseleave="doctorsDropdownOpen = false" x-data="{ doctorsDropdownOpen: false }">
+          <a href="#doctors" class="font-medium text-dark hover:text-primary transition-colors duration-300 flex items-center">
+            Dokter
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          
+          <!-- Doctors Dropdown Menu -->
+          <div 
+            x-show="doctorsDropdownOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2"
+            class="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <div class="py-1">
+              <a href="#doctor-profiles" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Profil Dokter</a>
+              <a href="#doctor-schedule" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Jadwal Dokter</a>
+              <a href="#doctor-specialties" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Spesialisasi</a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Facilities Dropdown -->
+        <div class="relative" @mouseover="facilitiesDropdownOpen = true" @mouseleave="facilitiesDropdownOpen = false" x-data="{ facilitiesDropdownOpen: false }">
+          <a href="#facilities" class="font-medium text-dark hover:text-primary transition-colors duration-300 flex items-center">
+            Fasilitas
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </a>
+          
+          <!-- Facilities Dropdown Menu -->
+          <div 
+            x-show="facilitiesDropdownOpen"
+            x-transition:enter="transition ease-out duration-200"
+            x-transition:enter-start="opacity-0 transform -translate-y-2"
+            x-transition:enter-end="opacity-100 transform translate-y-0"
+            x-transition:leave="transition ease-in duration-150"
+            x-transition:leave-start="opacity-100 transform translate-y-0"
+            x-transition:leave-end="opacity-0 transform -translate-y-2"
+            class="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+          >
+            <div class="py-1">
+              <a href="#medical-facilities" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Fasilitas Medis</a>
+              <a href="#public-facilities" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Fasilitas Umum</a>
+              <a href="#room-facilities" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Fasilitas Ruangan</a>
+              <a href="#worship-facilities" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Fasilitas Ibadah</a>
+              <a href="#parking-facilities" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Fasilitas Parkir</a>
+            </div>
+          </div>
+        </div>
+        
+        <a href="#news" class="font-medium text-dark hover:text-primary transition-colors duration-300">Berita</a>
+        <a href="#contact" class="font-medium text-dark hover:text-primary transition-colors duration-300">Kontak</a>
+      </div>
+
+      <!-- Kanan: Logo Akreditasi dan Buat Janji -->
+      <div class="hidden lg:flex items-center space-x-4">
+        <!-- Logo Akreditasi -->
+        <img src="img/akred.png" alt="Logo Akreditasi" class="h-11 w-auto" />
+
+        <!-- Tombol Janji -->
+        <a href="#appointment" class="bg-primary text-white px-6 py-2 rounded-full font-medium hover:bg-secondary transition-colors duration-300 flex items-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Buat Janji
+        </a>
+      </div>
+
+      <!-- Mobile menu button -->
+      <div class="lg:hidden">
+        <button @click="mobileMenuOpen = !mobileMenuOpen" class="text-dark hover:text-primary focus:outline-none">
+          <i class="fas" :class="mobileMenuOpen ? 'fa-times' : 'fa-bars'"></i>
+        </button>
+      </div>
+    </nav>
+
+    <!-- Mobile Navigation Menu - Enhanced with Collapsible Sections -->
+    <div
+      x-show="mobileMenuOpen"
+      class="lg:hidden bg-white shadow-lg rounded-lg mt-2 p-4"
+      x-transition:enter="transition ease-out duration-300"
+      x-transition:enter-start="opacity-0 transform -translate-y-2"
+      x-transition:enter-end="opacity-100 transform translate-y-0"
+      x-transition:leave="transition ease-in duration-300"
+      x-transition:leave-start="opacity-100 transform translate-y-0"
+      x-transition:leave-end="opacity-0 transform -translate-y-2"
+      x-data="{ 
+        profileOpen: false,
+        servicesOpen: false,
+        doctorsOpen: false,
+        facilitiesOpen: false
+      }"
+    >
+      <div class="flex flex-col space-y-2">
+        <a href="#home" @click="mobileMenuOpen = false" class="font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">Beranda</a>
+        
+        <!-- Profile Collapsible -->
+        <!-- 1. Modifikasi tautan dropdown untuk mengirim parameter tab -->
+<div class="relative" @mouseover="profileDropdownOpen = true" @mouseleave="profileDropdownOpen = false">
+  <a href="#profile" class="font-medium text-dark hover:text-primary transition-colors duration-300 flex items-center">
+    Profil
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+    </svg>
+  </a>
+ 
+  <!-- Profile Dropdown Menu -->
+  <div
+    x-show="profileDropdownOpen"
+    x-transition:enter="transition ease-out duration-200"
+    x-transition:enter-start="opacity-0 transform -translate-y-2"
+    x-transition:enter-end="opacity-100 transform translate-y-0"
+    x-transition:leave="transition ease-in duration-150"
+    x-transition:leave-start="opacity-100 transform translate-y-0"
+    x-transition:leave-end="opacity-0 transform -translate-y-2"
+    class="absolute z-50 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none"
+  >
+    <div class="py-1">
+      <a href="profil.html?tab=general-info" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Informasi Umum</a>
+      <a href="profil.html?tab=history" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Sejarah</a>
+      <a href="profil.html?tab=vision-mission" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Visi & Misi</a>
+      <a href="profil.html?tab=quality-indicators" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Indikator Mutu</a>
+      <a href="profil.html?tab=organization" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Struktur Organisasi</a>
+      <a href="profil.html?tab=accreditation" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary">Akreditasi</a>
+    </div>
+  </div>
+</div>
+        
+        <!-- Services Collapsible -->
+        <div class="border-b border-gray-100">
+          <button @click="servicesOpen = !servicesOpen" class="w-full flex justify-between items-center font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+            Layanan
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-200" :class="servicesOpen ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <div x-show="servicesOpen" class="pl-4 pr-2 py-1">
+            <a href="#polyclinics" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Poliklinik</a>
+            <a href="#emergency" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Gawat Darurat</a>
+            <a href="#inpatient" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Rawat Inap</a>
+            <a href="#laboratory" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Laboratorium</a>
+            <a href="#radiology" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Radiologi</a>
+            <a href="#pharmacy" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Farmasi</a>
+            <a href="#medical-checkup" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Medical Check-Up</a>
+            <a href="#ambulance" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Ambulans</a>
+          </div>
+        </div>
+        
+        <!-- Doctors Collapsible -->
+        <div class="border-b border-gray-100">
+          <button @click="doctorsOpen = !doctorsOpen" class="w-full flex justify-between items-center font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+            Dokter
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-200" :class="doctorsOpen ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <div x-show="doctorsOpen" class="pl-4 pr-2 py-1">
+            <a href="#doctor-profiles" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Profil Dokter</a>
+            <a href="#doctor-schedule" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Jadwal Dokter</a>
+            <a href="#doctor-specialties" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Spesialisasi</a>
+          </div>
+        </div>
+        
+        <!-- Facilities Collapsible -->
+        <div class="border-b border-gray-100">
+          <button @click="facilitiesOpen = !facilitiesOpen" class="w-full flex justify-between items-center font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">
+            Fasilitas
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 transform transition-transform duration-200" :class="facilitiesOpen ? 'rotate-180' : ''" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </button>
+          
+          <div x-show="facilitiesOpen" class="pl-4 pr-2 py-1">
+            <a href="#medical-facilities" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Fasilitas Medis</a>
+            <a href="#public-facilities" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Fasilitas Umum</a>
+            <a href="#room-facilities" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Fasilitas Ruangan</a>
+            <a href="#worship-facilities" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Fasilitas Ibadah</a>
+            <a href="#parking-facilities" @click="mobileMenuOpen = false" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-primary rounded-lg">Fasilitas Parkir</a>
+          </div>
+        </div>
+        
+        <a href="#news" @click="mobileMenuOpen = false" class="font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">Berita</a>
+        <a href="#contact" @click="mobileMenuOpen = false" class="font-medium text-dark hover:text-primary px-4 py-2 hover:bg-gray-100 rounded-lg transition-colors duration-300">Kontak</a>
+        <a href="#appointment" @click="mobileMenuOpen = false" class="bg-primary text-white px-6 py-2 mt-2 rounded-full font-medium hover:bg-secondary transition-colors duration-300 text-center flex items-center justify-center">
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+          </svg>
+          Buat Janji
+        </a>
+      </div>
+    </div>
+  </div>
+</header>
+
+    <!-- Main Content -->
+    <main>
+<!-- Premium Hospital Announcement Slider with Powerful Visual Effects -->
+          <div class="announcement-slider-wrapper relative overflow-hidden bg-gradient-to-b from-gray-50 to-white ">
+              <!-- Decorative Elements -->
+              <div class="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none z-0">
+                <div class="absolute -top-32 -left-32 w-64 h-64 bg-blue-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute -bottom-32 -right-32 w-64 h-64 bg-green-500/10 rounded-full blur-3xl"></div>
+                <div class="absolute top-1/2 right-1/3 w-40 h-40 bg-purple-500/10 rounded-full blur-3xl"></div>
+              </div>
+            
+              <!-- Main Slider with Premium Design -->
+              <div class="announcement-slider relative overflow-hidden shadow-2xl rounded-t-3xl max-w-7xl mx-auto border border-white/50 bg-gradient-to-br from-white/50 to-gray-100/50 backdrop-blur">
+                <!-- Progress Bar with Animated Gradient -->
+                <div class="absolute top-0 left-0 w-full h-1.5 z-20">
+                  <div class="slider-progress bg-gradient-to-r from-gray-200/40 to-gray-300/40 backdrop-blur w-full h-full">
+                    <div class="slider-progress-bar bg-gradient-to-r from-blue-500 via-purple-500 to-accent h-full w-0 rounded-r-full"></div>
+                  </div>
+                </div>
+                
+                <div class="owl-carousel owl-theme announcement-carousel">
+                  <!-- Announcement 1: Medical Check-up Promotion -->
+                  <div class="relative group">
+                    <img src="" class="w-full h-80 md:h-[480px] object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 group-hover:brightness-110" />
+                    <!-- Overlay with Animated Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-primary/95 via-primary/70 to-primary/30 flex items-center group-hover:bg-gradient-to-r group-hover:from-primary/90 group-hover:via-primary/60 group-hover:to-blue-900/20 transition-all duration-700">
+                      <div class="container mx-auto px-6 lg:px-10">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                          <div class="md:col-span-7 text-white space-y-4">
+                            <!-- Fancy Indicator -->
+                            <div class="flex items-center">
+                              <div class="h-8 w-1.5 bg-gradient-to-b from-accent to-blue-400 rounded-full mr-3 hidden md:block group-hover:h-10 transition-all duration-500"></div>
+                              <span class="uppercase tracking-wider text-xs md:text-sm font-semibold inline-flex items-center bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                                <span class="flex h-2 w-2 mr-2">
+                                  <span class="animate-ping absolute h-2 w-2 rounded-full bg-accent/75 opacity-75"></span>
+                                  <span class="relative rounded-full h-2 w-2 bg-accent"></span>
+                                </span>
+                                Layanan Unggulan
+                              </span>
+                            </div>
+                            
+                            <!-- Content with Entrance Animation -->
+                            <h3 class="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight slide-up-animation">
+                              Paket Medical <span class="text-accent">Check-up</span> Lengkap
+                            </h3>
+                            <p class="text-sm md:text-lg font-light max-w-2xl text-white/90 slide-up-animation-delay">
+                              Jaga kesehatan Anda dengan pemeriksaan menyeluruh. Dapatkan diskon <span class="text-accent font-medium">30%</span> untuk seluruh paket medical check-up sepanjang bulan Mei 2025.
+                            </p>
+                            
+                            <!-- Premium Buttons -->
+                            <div class="flex flex-wrap gap-4 pt-4 slide-up-animation-delay-2">
+                              <a href="#promo" class="group/btn inline-flex items-center bg-gradient-to-r from-accent to-blue-600 hover:from-accent hover:to-accent text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-accent/30">
+                                <span>Info Selengkapnya</span>
+                                <i class="fas fa-arrow-right ml-2 group-hover/btn:translate-x-1 transition-transform duration-300"></i>
+                              </a>
+                              <a href="#appointment" class="group/btn2 inline-flex items-center bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/40">
+                                <i class="fas fa-calendar-check mr-2 group-hover/btn2:scale-110 transition-transform duration-300"></i>
+                                <span>Jadwalkan Sekarang</span>
+                              </a>
+                            </div>
+                            
+                            <!-- Feature Pills -->
+                            <div class="flex flex-wrap gap-2 pt-2 slide-up-animation-delay-3">
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Dokter Spesialis
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Peralatan Modern
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Hasil Cepat
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Announcement 2: New Service -->
+                  <div class="relative group">
+                    <img src=""  class="w-full h-80 md:h-[480px] object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 group-hover:brightness-110" />
+                    <!-- Overlay with Animated Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-blue-900/95 via-blue-800/70 to-blue-600/30 flex items-center group-hover:bg-gradient-to-r group-hover:from-blue-900/90 group-hover:via-blue-800/60 group-hover:to-blue-600/20 transition-all duration-700">
+                      <div class="container mx-auto px-6 lg:px-10">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                          <div class="md:col-span-7 text-white space-y-4">
+                            <!-- Fancy Indicator -->
+                            <div class="flex items-center">
+                              <div class="h-8 w-1.5 bg-gradient-to-b from-accent to-blue-400 rounded-full mr-3 hidden md:block group-hover:h-10 transition-all duration-500"></div>
+                              <span class="uppercase tracking-wider text-xs md:text-sm font-semibold inline-flex items-center bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                                <span class="flex h-2 w-2 mr-2">
+                                  <span class="animate-ping absolute h-2 w-2 rounded-full bg-accent/75 opacity-75"></span>
+                                  <span class="relative rounded-full h-2 w-2 bg-accent"></span>
+                                </span>
+                                Layanan Baru
+                              </span>
+                            </div>
+                            
+                            <!-- Content with Entrance Animation -->
+                            <h3 class="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight slide-up-animation">
+                              Klinik Tumbuh <span class="text-accent">Kembang</span> Anak
+                            </h3>
+                            <p class="text-sm md:text-lg font-light max-w-2xl text-white/90 slide-up-animation-delay">
+                              Layanan baru untuk memantau perkembangan buah hati Anda dengan tim dokter anak spesialis dan peralatan modern.
+                            </p>
+                            
+                            <!-- Premium Buttons -->
+                            <div class="flex flex-wrap gap-4 pt-4 slide-up-animation-delay-2">
+                              <a href="#pediatric" class="group/btn inline-flex items-center bg-gradient-to-r from-accent to-blue-600 hover:from-accent hover:to-accent text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-accent/30">
+                                <span>Buat Janji Sekarang</span>
+                                <i class="fas fa-arrow-right ml-2 group-hover/btn:translate-x-1 transition-transform duration-300"></i>
+                              </a>
+                              <a href="#pediatric-info" class="group/btn2 inline-flex items-center bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/40">
+                                <i class="fas fa-info-circle mr-2 group-hover/btn2:scale-110 transition-transform duration-300"></i>
+                                <span>Informasi Layanan</span>
+                              </a>
+                            </div>
+                            
+                            <!-- Feature Pills -->
+                            <div class="flex flex-wrap gap-2 pt-2 slide-up-animation-delay-3">
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Dokter Spesialis Anak
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Fasilitas Ramah Anak
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Konsultasi Terpadu
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <!-- Announcement 3: Telemedicine -->
+                  <div class="relative group">
+                    <img src="" class="w-full h-80 md:h-[480px] object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 group-hover:brightness-110" />
+                    <!-- Overlay with Animated Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-green-900/95 via-green-800/70 to-green-600/30 flex items-center group-hover:bg-gradient-to-r group-hover:from-green-900/90 group-hover:via-green-800/60 group-hover:to-green-600/20 transition-all duration-700">
+                      <div class="container mx-auto px-6 lg:px-10">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                          <div class="md:col-span-7 text-white space-y-4">
+                            <!-- Fancy Indicator -->
+                            <div class="flex items-center">
+                              <div class="h-8 w-1.5 bg-gradient-to-b from-accent to-green-400 rounded-full mr-3 hidden md:block group-hover:h-10 transition-all duration-500"></div>
+                              <span class="uppercase tracking-wider text-xs md:text-sm font-semibold inline-flex items-center bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                                <span class="flex h-2 w-2 mr-2">
+                                  <span class="animate-ping absolute h-2 w-2 rounded-full bg-accent/75 opacity-75"></span>
+                                  <span class="relative rounded-full h-2 w-2 bg-accent"></span>
+                                </span>
+                                24/7 Tersedia
+                              </span>
+                            </div>
+                            
+                            <!-- Content with Entrance Animation -->
+                            <h3 class="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight slide-up-animation">
+                              Layanan <span class="text-accent">Telemedicine</span> 24 Jam
+                            </h3>
+                            <p class="text-sm md:text-lg font-light max-w-2xl text-white/90 slide-up-animation-delay">
+                              Konsultasi dengan dokter spesialis kapan saja dan di mana saja melalui aplikasi RS Aisyiyah Kendal.
+                            </p>
+                            
+                            <!-- Premium Buttons -->
+                            <div class="flex flex-wrap gap-4 pt-4 slide-up-animation-delay-2">
+                              <a href="#telemedicine" class="group/btn inline-flex items-center gap-2 bg-gradient-to-r from-accent to-green-600 hover:from-accent hover:to-accent text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-accent/30">
+                                <i class="fas fa-download group-hover/btn:scale-110 transition-transform duration-300"></i>
+                                <span>Unduh Aplikasi</span>
+                              </a>
+                              <a href="#telemedicine-info" class="group/btn2 inline-flex items-center bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/40">
+                                <i class="fas fa-info-circle mr-2 group-hover/btn2:scale-110 transition-transform duration-300"></i>
+                                <span>Info Layanan</span>
+                              </a>
+                            </div>
+                            
+                            <!-- Feature Pills -->
+                            <div class="flex flex-wrap gap-2 pt-2 slide-up-animation-delay-3">
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Akses 24/7
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Dokter Berpengalaman
+                              </span>
+                              <span class="text-xs md:text-sm bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm text-white/90">
+                                <i class="fas fa-check-circle text-accent mr-1"></i> Resep Online
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+              
+                  <!-- Announcement 4: Health Seminar -->
+                  <div class="relative group">
+                    <img src="" class="w-full h-80 md:h-[480px] object-cover transition-all duration-1000 ease-in-out group-hover:scale-105 group-hover:brightness-110" />
+                    <!-- Overlay with Animated Gradient -->
+                    <div class="absolute inset-0 bg-gradient-to-r from-purple-900/95 via-purple-800/70 to-purple-600/30 flex items-center group-hover:bg-gradient-to-r group-hover:from-purple-900/90 group-hover:via-purple-800/60 group-hover:to-purple-600/20 transition-all duration-700">
+                      <div class="container mx-auto px-6 lg:px-10">
+                        <div class="grid grid-cols-1 md:grid-cols-12 gap-8">
+                          <div class="md:col-span-7 text-white space-y-4">
+                            <!-- Fancy Indicator -->
+                            <div class="flex items-center">
+                              <div class="h-8 w-1.5 bg-gradient-to-b from-accent to-purple-400 rounded-full mr-3 hidden md:block group-hover:h-10 transition-all duration-500"></div>
+                              <span class="uppercase tracking-wider text-xs md:text-sm font-semibold inline-flex items-center bg-white/10 px-3 py-1 rounded-full backdrop-blur-sm">
+                                <span class="flex h-2 w-2 mr-2">
+                                  <span class="animate-ping absolute h-2 w-2 rounded-full bg-accent/75 opacity-75"></span>
+                                  <span class="relative rounded-full h-2 w-2 bg-accent"></span>
+                                </span>
+                                Event Mendatang
+                              </span>
+                            </div>
+                            
+                            <!-- Event Details -->
+                            <div class="flex flex-wrap items-center space-x-2 slide-up-animation">
+                              <span class="bg-accent text-white text-xs px-3 py-1 rounded-full font-medium shadow-md flex items-center">
+                                <i class="far fa-calendar-alt mr-1"></i> 20 Mei 2025
+                              </span>
+                              <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium shadow-md backdrop-blur-sm flex items-center">
+                                <i class="far fa-clock mr-1"></i> 09:00 - 12:00 WIB
+                              </span>
+                              <span class="bg-white/20 text-white text-xs px-3 py-1 rounded-full font-medium shadow-md backdrop-blur-sm flex items-center mt-2 md:mt-0">
+                                <i class="fas fa-map-marker-alt mr-1"></i> Auditorium Lt. 5
+                              </span>
+                            </div>
+                            
+                            <!-- Content with Entrance Animation -->
+                            <h3 class="text-2xl md:text-4xl lg:text-5xl font-bold tracking-tight leading-tight slide-up-animation-delay">
+                              Seminar: "<span class="text-accent">Pola Hidup Sehat</span> di Era Digital"
+                            </h3>
+                            <p class="text-sm md:text-lg font-light max-w-2xl text-white/90 slide-up-animation-delay-2">
+                              Bersama Prof. Dr. Hendra Wijaya, Sp.PD. Tempat terbatas! Daftarkan diri Anda sekarang.
+                            </p>
+                            
+                            <!-- Premium Buttons -->
+                            <div class="flex flex-wrap gap-4 pt-4 slide-up-animation-delay-3">
+                              <a href="#seminar" class="group/btn inline-flex items-center bg-gradient-to-r from-accent to-purple-600 hover:from-accent hover:to-accent text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-500 transform hover:scale-105 shadow-lg hover:shadow-accent/30">
+                                <span>Daftar Seminar</span>
+                                <i class="fas fa-arrow-right ml-2 group-hover/btn:translate-x-1 transition-transform duration-300"></i>
+                              </a>
+                              <a href="#seminar-info" class="group/btn2 inline-flex items-center bg-white/10 hover:bg-white/20 text-white px-6 py-3 rounded-full text-sm font-medium transition-all duration-300 backdrop-blur-sm border border-white/20 hover:border-white/40">
+                                <i class="fas fa-info-circle mr-2 group-hover/btn2:scale-110 transition-transform duration-300"></i>
+                                <span>Detail Acara</span>
+                              </a>
+                            </div>
+                            
+                            <!-- Countdown Badge -->
+                            <div class="inline-block bg-white/10 backdrop-blur-sm px-3 py-1 rounded-full text-xs text-white/90 slide-up-animation-delay-4">
+                              <i class="fas fa-hourglass-half text-accent mr-1 animate-pulse"></i>
+                              <span class="countdown-timer" data-target="2025-05-20T09:00:00">Segera Hadir</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              
+                <!-- Enhanced Navigation Controls -->
+                <div class="announcement-nav">
+                  <button class="announcement-prev absolute left-4 md:left-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/30 hover:bg-accent text-white flex items-center justify-center z-10 transition-all duration-300 backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100 hover:scale-110 border border-white/20">
+                    <i class="fas fa-chevron-left text-lg"></i>
+                  </button>
+                  <button class="announcement-next absolute right-4 md:right-6 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 rounded-full bg-black/30 hover:bg-accent text-white flex items-center justify-center z-10 transition-all duration-300 backdrop-blur-sm shadow-lg opacity-0 group-hover:opacity-100 hover:scale-110 border border-white/20">
+                    <i class="fas fa-chevron-right text-lg"></i>
+                  </button>
+                </div>
+                
+                <!-- Enhanced Indicators & Slide Info -->
+                <div class="absolute bottom-4 left-0 w-full z-10">
+                  <div class="container mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+                    <!-- Custom Indicators -->
+                    <div class="owl-dots custom-dots flex justify-center space-x-3 mb-2 md:mb-0"></div>
+                    
+                    <!-- Slide Counter with Pill Design -->
+                    <div class="bg-black/30 backdrop-blur-sm text-white rounded-full px-4 py-1.5 text-xs flex items-center border border-white/10 shadow-lg">
+                      <span class="current-slide font-medium">1</span>
+                      <span class="mx-1 text-white/60">/</span>
+                      <span class="total-slides text-white/80">4</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            
+              <!-- Premium Access Badges - Floating Design -->
+              <div class="bg-white/90 backdrop-blur-lg shadow-2xl relative z-20 max-w-6xl mx-auto rounded-3xl transform -mt-10 border border-white">
+                <div class="container mx-auto px-4 py-6">
+                  <!-- Floating Badge Title -->
+                  <div class="text-center mb-4">
+                    <h4 class="text-gray-600 font-medium text-sm md:text-base inline-block bg-gray-100/80 px-6 py-1.5 rounded-full">Akses Cepat Layanan Kami</h4>
+                  </div>
+                  
+                  <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 px-4">
+                      <!-- Emergency Badge - Enhanced with Wave -->
+                      <a href="#emergency" class="group relative bg-white hover:bg-gradient-to-br hover:from-red-50 hover:to-white p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center text-center border border-gray-100 hover:border-red-100 overflow-hidden">
+                        <!-- Pulse Background -->
+                        <div class="absolute inset-0 bg-red-500/5 rounded-xl opacity-0 group-hover:opacity-100 group-hover:animate-pulse-slow transition-opacity duration-500"></div>
+                        
+                        <!-- Wave Background -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-red-500/5 group-hover:bg-red-500/10 transition-all duration-500"></div>
+                        
+                        <!-- Badge Icon -->
+                        <div class="relative z-10 w-16 h-16 bg-red-50 group-hover:bg-red-100 text-red-600 rounded-full flex items-center justify-center mb-4 transition-all duration-300 group-hover:shadow-sm">
+                          <i class="fas fa-ambulance text-2xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                          <span class="absolute -top-1 -right-1 w-5 h-5 bg-red-500 rounded-full flex items-center justify-center animate-pulse">
+                            <span class="w-2 h-2 bg-white rounded-full"></span>
+                          </span>
+                        </div>
+                        
+                        <span class="relative z-10 text-gray-800 group-hover:text-red-700 font-semibold text-sm md:text-base transition-colors duration-300">Gawat Darurat</span>
+                        <span class="relative z-10 text-xs text-gray-500 group-hover:text-red-500 mt-1 transition-colors duration-300">24/7 Emergency</span>
+                        
+                        <!-- Animated Wave -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-red-400/30 group-hover:bg-red-400/50 overflow-hidden">
+                          <div class="absolute top-0 left-0 right-0 h-full wave-animation" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)"></div>
+                        </div>
+                        
+                        <!-- Urgent Ribbon -->
+                        <div class="absolute top-0 right-0 w-16 h-16 overflow-hidden">
+                          <div class="absolute top-0 right-0 w-24 h-6 bg-red-600 transform rotate-45 translate-y-2 translate-x-6 flex items-center justify-center">
+                            <span class="text-white text-[10px] font-bold">URGENT</span>
+                          </div>
+                        </div>
+                      </a>
+                    
+                      <!-- MJKN Registration Badge - Enhanced -->
+                      <a href="https://mjkn.kemkes.go.id" target="_blank" class="group relative bg-white hover:bg-gradient-to-br hover:from-blue-50 hover:to-white p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center text-center border border-gray-100 hover:border-blue-200 overflow-hidden">
+                        <!-- Wave Background -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-blue-500/5 group-hover:bg-blue-500/10 transition-all duration-500"></div>
+                        
+                        <!-- Badge Icon -->
+                        <div class="w-16 h-16 bg-blue-50 group-hover:bg-blue-100 text-blue-600 rounded-full flex items-center justify-center mb-4 transition-all duration-300 group-hover:shadow-sm relative">
+                          <div class="relative">
+                            <i class="fas fa-hospital-user text-2xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                            <div class="absolute -bottom-2 -right-2 w-6 h-6 bg-blue-600 rounded-full flex items-center justify-center">
+                              <svg viewBox="0 0 24 24" class="w-3 h-3 text-white fill-current">
+                                <path d="M12 2L4 5v6.09c0 5.05 3.41 9.76 8 10.91 4.59-1.15 8-5.86 8-10.91V5l-8-3z"/>
+                              </svg>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <span class="text-gray-800 group-hover:text-blue-700 font-semibold text-sm md:text-base transition-colors duration-300">Pendaftaran Online</span>
+                        <span class="text-xs text-gray-500 group-hover:text-blue-600 mt-1 transition-colors duration-300">Via Mobile JKN</span>
+                        
+                        <!-- BPJS Badge -->
+                        <div class="mt-2 px-2 py-1 bg-blue-50 group-hover:bg-blue-100 text-blue-700 text-[10px] font-medium rounded-full inline-flex items-center transition-colors duration-300 border border-blue-200">
+                        
+                          <span>Resmi BPJS</span>
+                        </div>
+                        
+                        <!-- Animated Wave -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-blue-400/30 group-hover:bg-blue-400/50 overflow-hidden">
+                          <div class="absolute top-0 left-0 right-0 h-full wave-animation" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)"></div>
+                        </div>
+                      </a>
+                    
+                      <!-- Medical Services Badge - Enhanced with Wave -->
+                      <a href="#departments" class="group relative bg-white hover:bg-gradient-to-br hover:from-green-50 hover:to-white p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center text-center border border-gray-100 hover:border-green-100 overflow-hidden">
+                        <!-- Wave Background -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-green-500/5 group-hover:bg-green-500/10 transition-all duration-500"></div>
+                        
+                        <!-- Badge Icon -->
+                        <div class="w-16 h-16 bg-green-50 group-hover:bg-green-100 text-green-600 rounded-full flex items-center justify-center mb-4 transition-all duration-300 group-hover:shadow-sm">
+                          <i class="fas fa-stethoscope text-2xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        
+                        <span class="text-gray-800 group-hover:text-green-700 font-semibold text-sm md:text-base transition-colors duration-300">Layanan Medis</span>
+                        <span class="text-xs text-gray-500 group-hover:text-green-500 mt-1 transition-colors duration-300">Spesialisasi Lengkap</span>
+                        
+                        <!-- Verified Badge -->
+                        <div class="mt-2 px-2 py-1 bg-green-50 group-hover:bg-green-100 text-green-700 text-[10px] font-medium rounded-full inline-flex items-center transition-colors duration-300">
+                          <i class="fas fa-check-circle mr-1 text-xs"></i>
+                          <span>Verified</span>
+                        </div>
+                        
+                        <!-- Animated Wave -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-green-400/30 group-hover:bg-green-400/50 overflow-hidden">
+                          <div class="absolute top-0 left-0 right-0 h-full wave-animation" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)"></div>
+                        </div>
+                      </a>
+                    
+                      <!-- Find Doctor Badge - Enhanced with Wave -->
+                      <a href="#doctors" class="group relative bg-white hover:bg-gradient-to-br hover:from-purple-50 hover:to-white p-5 rounded-xl transition-all duration-300 hover:-translate-y-1 hover:shadow-lg flex flex-col items-center justify-center text-center border border-gray-100 hover:border-purple-100 overflow-hidden">
+                        <!-- Wave Background -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1/4 bg-purple-500/5 group-hover:bg-purple-500/10 transition-all duration-500"></div>
+                        
+                        <!-- Badge Icon -->
+                        <div class="w-16 h-16 bg-purple-50 group-hover:bg-purple-100 text-purple-600 rounded-full flex items-center justify-center mb-4 transition-all duration-300 group-hover:shadow-sm">
+                          <i class="fas fa-user-md text-2xl transform group-hover:scale-110 transition-transform duration-300"></i>
+                        </div>
+                        
+                        <span class="text-gray-800 group-hover:text-purple-700 font-semibold text-sm md:text-base transition-colors duration-300">Cari Dokter</span>
+                        <span class="text-xs text-gray-500 group-hover:text-purple-500 mt-1 transition-colors duration-300">Buat Janji</span>
+                        
+                        <!-- Rating Stars -->
+                        <div class="mt-2 flex items-center justify-center space-x-0.5">
+                          <i class="fas fa-star text-yellow-400 text-xs"></i>
+                          <i class="fas fa-star text-yellow-400 text-xs"></i>
+                          <i class="fas fa-star text-yellow-400 text-xs"></i>
+                          <i class="fas fa-star text-yellow-400 text-xs"></i>
+                          <i class="fas fa-star-half-alt text-yellow-400 text-xs"></i>
+                        </div>
+                        
+                        <!-- Animated Wave -->
+                        <div class="absolute bottom-0 left-0 right-0 h-1 bg-purple-400/30 group-hover:bg-purple-400/50 overflow-hidden">
+                          <div class="absolute top-0 left-0 right-0 h-full wave-animation" style="background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent)"></div>
+                        </div>
+                      </a>
+                    </div>
+                </div>
+              </div>  
+            
+
+                <!-- Hero Section -->
+                <section id="home" class="relative overflow-hidden">
+                  <div class="owl-carousel owl-theme hero-carousel">
+                    <div class="relative">
+                      <img src="/api/placeholder/1920/800" alt="Rumah Sakit Aisyiyah Kendal" class="w-full object-cover h-96 md:h-auto" />
+                      <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-transparent flex items-center">
+                        <div class="container mx-auto px-4">
+                          <div class="max-w-lg">
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Pelayanan Kesehatan Terpadu</h1>
+                            <p class="text-white mb-6">Kami berkomitmen untuk memberikan pelayanan kesehatan terbaik dengan fasilitas modern dan tim medis profesional.</p>
+                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                              <a href="#appointment" class="bg-accent text-white px-6 py-3 rounded-full font-medium hover:bg-accent/90 transition-colors duration-300 text-center">Buat Janji Temu</a>
+                              <a href="#services" class="bg-white text-primary px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 text-center">Layanan Kami</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative">
+                      <img src="/api/placeholder/1920/800" alt="Rumah Sakit Aisyiyah Kendal" class="w-full object-cover h-96 md:h-auto" />
+                      <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-transparent flex items-center">
+                        <div class="container mx-auto px-4">
+                          <div class="max-w-lg">
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Dokter Ahli & Profesional</h1>
+                            <p class="text-white mb-6">Tim dokter kami terdiri dari para spesialis berpengalaman dengan dedikasi tinggi untuk kesehatan Anda.</p>
+                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                              <a href="#doctors" class="bg-accent text-white px-6 py-3 rounded-full font-medium hover:bg-accent/90 transition-colors duration-300 text-center">Temui Dokter Kami</a>
+                              <a href="#profile" class="bg-white text-primary px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 text-center">Tentang Kami</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="relative">
+                      <img src="/api/placeholder/1920/800" alt="Rumah Sakit Aisyiyah Kendal" class="w-full object-cover h-96 md:h-auto" />
+                      <div class="absolute inset-0 bg-gradient-to-r from-primary/70 to-transparent flex items-center">
+                        <div class="container mx-auto px-4">
+                          <div class="max-w-lg">
+                            <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-4">Fasilitas Modern</h1>
+                            <p class="text-white mb-6">Dilengkapi dengan teknologi medis terkini untuk diagnosa dan pengobatan yang tepat dan akurat.</p>
+                            <div class="flex flex-col sm:flex-row space-y-3 sm:space-y-0 sm:space-x-4">
+                              <a href="#facilities" class="bg-accent text-white px-6 py-3 rounded-full font-medium hover:bg-accent/90 transition-colors duration-300 text-center">Lihat Fasilitas</a>
+                              <a href="#contact" class="bg-white text-primary px-6 py-3 rounded-full font-medium hover:bg-gray-100 transition-colors duration-300 text-center">Hubungi Kami</a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </section>
+
+                <section id="director-message" class="py-16 bg-white">
+            <div class="container mx-auto px-4">
+              <!-- Header Section dengan Selamat Datang -->
+              <div class="text-center mb-12">
+                <span class="inline-block px-4 py-2 bg-primary/10 text-primary font-semibold rounded-full mb-3">SELAMAT DATANG</span>
+                <h1 class="text-4xl font-bold text-gray-900 mt-2">Rumah Sakit Aisyiyah Kendal</h1>
+                <div class="w-32 h-1.5 bg-accent mx-auto my-6"></div>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                  Memberikan pelayanan kesehatan paripurna dengan standar internasional dan sentuhan kemanusiaan
+                </p>
+              </div>
+              
+              <!-- Sambutan Direktur -->
+              <div class="text-center mb-8">
+                <span class="text-primary font-semibold">SAMBUTAN DIREKTUR</span>
+                <h2 class="text-3xl font-bold text-gray-900 mt-2">Pesan dari Direktur Utama</h2>
+              </div>
+              
+              <div class="max-w-5xl mx-auto bg-white rounded-xl shadow-lg overflow-hidden border border-gray-100">
+                <div class="flex flex-col md:flex-row">
+                  <!-- Foto Direktur -->
+                  <div class="md:w-2/5 relative">
+                    <img src="img/dokter/dirut.jpg" alt="Dr. Ahmad Wijaya, Direktur RS Aisyiyah Kendal" 
+                        class="w-full h-full object-cover min-h-[400px]">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
+                      <h3 class="text-2xl font-bold text-white">Dr. Ahmad Wijaya, Sp.PD-KHOM</h3>
+                      <p class="text-white/90">Direktur Utama</p>
+                    </div>
+                  </div>
+                  
+                  <!-- Pesan Direktur -->
+                  <div class="md:w-3/5 p-8">
+                    <div class="flex items-start mb-6">
+                      <img src="/images/quote-icon.png" alt="Quote" class="h-10 mr-4 opacity-20">
+                      <div>
+                        <p class="text-gray-700 text-lg leading-relaxed">
+                          "Atas nama keluarga besar <strong>RS Aisyiyah Kendal</strong>, saya mengucapkan selamat datang di institusi kesehatan kami yang mengedepankan <strong>pelayanan holistik</strong> berbasis bukti ilmiah dan nilai-nilai Islami.
+                        </p>
+                        <p class="text-gray-700 text-lg leading-relaxed mt-4">
+                          Kami berkomitmen memberikan <strong>pelayanan paripurna</strong> yang mengutamakan keselamatan pasien, didukung oleh tim medis profesional, teknologi terkini, dan fasilitas berstandar akreditasi nasional. Setiap pasien adalah tamu terhormat yang kami layani dengan integritas dan kasih sayang."
+                        </p>
+                      </div>
+                    </div>
+                    
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-end mt-8">
+                      <div>
+                        <img src="/images/signature.png" alt="Tanda Tangan Direktur" class="h-14 mb-2">
+                        <p class="text-sm text-gray-500">Direktur Utama</p>
+                      </div>
+                      <div class="mt-4 sm:mt-0">
+                        <div class="flex items-center">
+                          <div class="bg-primary/10 p-3 rounded-lg mr-3">
+                            <i class="fas fa-award text-primary text-xl"></i>
+                          </div>
+                          <div>
+                            <p class="text-sm text-gray-500">Terakreditasi</p>
+                            <p class="font-bold text-primary">PARIPURNA</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- CTA Section -->
+              <div class="mt-12 text-center">
+                <div class="inline-flex flex-col sm:flex-row gap-4">
+                  <a href="#contact" class="inline-flex items-center justify-center bg-primary hover:bg-primary-dark text-white px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-calendar-check mr-3"></i> Buat Janji Temu Online
+                  </a>
+                  <a href="#services" class="inline-flex items-center justify-center bg-white hover:bg-gray-50 text-primary border-2 border-primary px-8 py-4 rounded-full font-medium transition-all duration-300 shadow-lg hover:shadow-xl">
+                    <i class="fas fa-procedures mr-3"></i> Layanan Kami
+                  </a>
+                </div>
+              </div>
+            </div>
+          </section>
+
+          <section id="doctors" class="py-20 bg-gray-50">
+              <div class="container mx-auto px-4">
+                <div class="text-center mb-16">
+                  <h2 class="text-4xl font-bold mb-4 text-gray-800">Tim Dokter Spesialis Kami</h2>
+                  <div class="w-24 h-1.5 bg-accent mx-auto mb-6"></div>
+                  <p class="text-gray-600 max-w-3xl mx-auto text-lg leading-relaxed">
+                    Tim dokter profesional kami siap memberikan pelayanan kesehatan terbaik dengan teknologi terkini dan pendekatan holistik.
+                  </p>
+                </div>
+            
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+                  <div class="doctor-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative group">
+                    <div class="overflow-hidden h-72">
+                      <img src="img/dokter/laki-1.jpg" alt="Dr. Agus Setiawan" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-1 text-gray-800">Dr. Agus Setiawan, Sp.JP</h3>
+                      <p class="text-primary font-medium mb-3">Kardiologi & Vaskular</p>
+                      <p class="text-gray-600 text-sm mb-4">Spesialis jantung dengan pengalaman 15 tahun, ahli dalam kateterisasi jantung dan penanganan aritmia.</p>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-award text-yellow-500 mr-2"></i>
+                        <span>Fellowship di National Heart Centre Singapore</span>
+                      </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
+                      <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-calendar-alt"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-info-circle"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            
+                  <div class="doctor-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative group">
+                    <div class="overflow-hidden h-72">
+                      <img src="img/dokter/women-1.jpg" alt="Dr. Siti Rahmawati" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-1 text-gray-800">Dr. Siti Rahmawati, Sp.OG</h3>
+                      <p class="text-primary font-medium mb-3">Obstetri & Ginekologi</p>
+                      <p class="text-gray-600 text-sm mb-4">Spesialis kandungan dengan keahlian dalam USG 4D, kehamilan risiko tinggi, dan infertilitas.</p>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-award text-yellow-500 mr-2"></i>
+                        <span>Anggota Indonesian Society of Maternal-Fetal Medicine</span>
+                      </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
+                      <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-calendar-alt"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-info-circle"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            
+                  <div class="doctor-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative group">
+                    <div class="overflow-hidden h-72">
+                      <img src="img/dokter/laki-2.jpg" alt="Dr. Budi Santoso" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-1 text-gray-800">Dr. Budi Santoso, Sp.N</h3>
+                      <p class="text-primary font-medium mb-3">Neurologi</p>
+                      <p class="text-gray-600 text-sm mb-4">Ahli saraf dengan spesialisasi penanganan stroke, epilepsi, dan gangguan sistem saraf pusat.</p>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-award text-yellow-500 mr-2"></i>
+                        <span>Pelatihan khusus di Johns Hopkins Hospital</span>
+                      </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
+                      <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-calendar-alt"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-info-circle"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+            
+                  <div class="doctor-card bg-white rounded-xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 relative group">
+                    <div class="overflow-hidden h-72">
+                      <img src="img/dokter/women-2.jpg"Dr. Maya Pertiwi" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
+                    </div>
+                    <div class="p-6">
+                      <h3 class="text-xl font-bold mb-1 text-gray-800">Dr. Maya Pertiwi, Sp.THT-KL</h3>
+                      <p class="text-primary font-medium mb-3">THT & Bedah Kepala Leher</p>
+                      <p class="text-gray-600 text-sm mb-4">Spesialis THT dengan fokus pada gangguan pendengaran, sinusitis, dan gangguan tidur.</p>
+                      <div class="flex items-center text-sm text-gray-500">
+                        <i class="fas fa-award text-yellow-500 mr-2"></i>
+                        <span>Pakar Sleep Apnea dari University of Tokyo</span>
+                      </div>
+                    </div>
+                    <div class="absolute inset-0 bg-gradient-to-t from-primary/90 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end justify-center pb-8">
+                      <div class="flex space-x-4">
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fab fa-linkedin-in"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-calendar-alt"></i>
+                        </a>
+                        <a href="#" class="w-10 h-10 bg-white rounded-full flex items-center justify-center text-primary hover:bg-accent hover:text-white transition-colors">
+                          <i class="fas fa-info-circle"></i>
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+            
+                <div class="text-center mt-16">
+                  <a href="/doctors" class="bg-primary text-white px-10 py-4 rounded-full font-semibold hover:bg-secondary transition-all duration-300 inline-flex items-center group">
+                    Lihat Semua Dokter Spesialis
+                    <i class="fas fa-chevron-right ml-2 group-hover:translate-x-1 transition-transform"></i>
+                  </a>
+                </div>
+              </div>
+            </section>
+          <!-- 
+                <section id="facilities" class="py-16 bg-light">
+                  <div class="container mx-auto px-4">
+                    <div class="text-center mb-12">
+                      <h2 class="text-3xl font-bold mb-2">Fasilitas Modern</h2>
+                      <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                      <p class="text-gray-600 max-w-2xl mx-auto">RS Aisyiyah Kendal dilengkapi dengan fasilitas dan peralatan medis terkini untuk memberikan pelayanan kesehatan terbaik.</p>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/operasi.jpg" alt="Ruang Operasi" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">Ruang Operasi Modern</h3>
+                          <p class="text-gray-600">Dilengkapi dengan peralatan bedah terkini dan sistem sterilisasi tingkat tinggi untuk menjamin keselamatan pasien.</p>
+                        </div>
+                      </div>
+
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/laborat.jpg" alt="Laboratorium" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">Laboratorium Terpadu</h3>
+                          <p class="text-gray-600">Fasilitas laboratorium lengkap dengan peralatan canggih untuk pemeriksaan darah, mikrobiologi, dan biokimia.</p>
+                        </div>
+                      </div>
+
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/rad.jpg" alt="MRI" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">Radiologi & Pencitraan</h3>
+                          <p class="text-gray-600">Unit pencitraan medis dilengkapi dengan CT Scan, MRI, USG 4D dan teknologi pencitraan terkini.</p>
+                        </div>
+                      </div>
+
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/icu.jpg" alt="ICU" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">ICU & NICU</h3>
+                          <p class="text-gray-600">Unit perawatan intensif dengan monitoring 24 jam dan peralatan pendukung kehidupan terbaik.</p>
+                        </div>
+                      </div>
+
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/ranap.jpg" alt="Kamar Rawat Inap" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">Ruang Rawat Inap</h3>
+                          <p class="text-gray-600">Tersedia berbagai kelas ruang rawat inap yang nyaman dilengkapi dengan fasilitas pendukung.</p>
+                        </div>
+                      </div>
+
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                        <img src="img/layanan/hematologi.jpg" alt="Hemodialisis" class="w-full h-48 object-cover" />
+                        <div class="p-6">
+                          <h3 class="text-xl font-semibold mb-2">Unit Hemodialisis</h3>
+                          <p class="text-gray-600">Layanan cuci darah dengan peralatan hemodialisis terbaru dan tenaga medis berpengalaman.</p>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="text-center mt-10">
+                      <a href="#" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-secondary transition-colors duration-300 inline-block">Eksplor Fasilitas Lainnya</a>
+                    </div>
+                  </div>
+                </section> -->
+
+                
+                          <!-- Features Section -->
+                          <section class="py-12 bg-white">
+                            <div class="container mx-auto px-4">
+                              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                                <div class="flex items-center p-6 bg-light rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                                  <div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mr-4">
+                                    <i class="fas fa-stethoscope text-primary text-xl"></i>
+                                  </div>
+                                  <div>
+                                    <h3 class="font-semibold text-lg">Dokter Spesialis</h3>
+                                    <p class="text-gray-600 text-sm">Lebih dari 50 dokter spesialis</p>
+                                  </div>
+                                </div>
+                                <div class="flex items-center p-6 bg-light rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                                  <div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mr-4">
+                                    <i class="fas fa-ambulance text-primary text-xl"></i>
+                                  </div>
+                                  <div>
+                                    <h3 class="font-semibold text-lg">Layanan 24 Jam</h3>
+                                    <p class="text-gray-600 text-sm">Selalu siap melayani setiap saat</p>
+                                  </div>
+                                </div>
+                                <div class="flex items-center p-6 bg-light rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                                  <div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mr-4">
+                                    <i class="fas fa-procedures text-primary text-xl"></i>
+                                  </div>
+                                  <div>
+                                    <h3 class="font-semibold text-lg">100+ Ruang Rawat</h3>
+                                    <p class="text-gray-600 text-sm">Nyaman dan lengkap</p>
+                                  </div>
+                                </div>
+                                <div class="flex items-center p-6 bg-light rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300">
+                                  <div class="w-12 h-12 bg-primary/10 flex items-center justify-center rounded-full mr-4">
+                                    <i class="fas fa-microscope text-primary text-xl"></i>
+                                  </div>
+                                  <div>
+                                    <h3 class="font-semibold text-lg">Teknologi Modern</h3>
+                                    <p class="text-gray-600 text-sm">Peralatan medis terkini</p>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                          </section>
+
+                        
+
+                          <!-- Services Section -->
+                          <section id="services" class="py-16 bg-white">
+                            <div class="container mx-auto px-4">
+                              <div class="text-center mb-12">
+                                <h2 class="text-3xl font-bold mb-2">Layanan Unggulan</h2>
+                                <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                                <p class="text-gray-600 max-w-2xl mx-auto">Rumah Sakit Aisyiyah Kendal menyediakan berbagai layanan kesehatan komprehensif yang dirancang untuk memenuhi kebutuhan kesehatan Anda dan keluarga.</p>
+                              </div>
+
+                              <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-heartbeat text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Kardiologi</h3>
+                                  <p class="text-gray-600 mb-4">Pelayanan untuk masalah jantung dan pembuluh darah dengan teknologi canggih dan dokter spesialis berpengalaman.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-brain text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Neurologi</h3>
+                                  <p class="text-gray-600 mb-4">Penanganan penyakit saraf dengan pendekatan komprehensif oleh tim neurologi yang berpengalaman.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-baby text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Kebidanan & Kandungan</h3>
+                                  <p class="text-gray-600 mb-4">Layanan kesehatan ibu dan anak, termasuk pemeriksaan kehamilan, persalinan, dan perawatan bayi baru lahir.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-bone text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Ortopedi</h3>
+                                  <p class="text-gray-600 mb-4">Penanganan masalah tulang, sendi, dan otot dengan teknologi modern dan dokter spesialis ortopedi terbaik.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-lungs text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Pulmonologi</h3>
+                                  <p class="text-gray-600 mb-4">Layanan untuk masalah paru-paru dan sistem pernapasan dengan pendekatan terpadu dan peralatan canggih.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+
+                                <div class="service-card bg-white p-6 rounded-lg shadow-sm hover:shadow-lg transition-all duration-300">
+                                  <div class="service-icon w-16 h-16 bg-light rounded-full flex items-center justify-center mb-4 text-primary transition-all duration-300">
+                                    <i class="fas fa-eye text-2xl"></i>
+                                  </div>
+                                  <h3 class="text-xl font-semibold mb-2">Oftalmologi</h3>
+                                  <p class="text-gray-600 mb-4">Layanan kesehatan mata lengkap, termasuk pemeriksaan rutin, pengobatan, dan operasi mata.</p>
+                                  <a href="#" class="text-primary hover:text-secondary font-medium flex items-center">
+                                    Pelajari Lebih Lanjut
+                                    <i class="fas fa-arrow-right ml-2"></i>
+                                  </a>
+                                </div>
+                              </div>
+
+                              <div class="text-center mt-10">
+                                <a href="#" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-secondary transition-colors duration-300 inline-block">Lihat Semua Layanan</a>
+                              </div>
+                            </div>
+                          </section>
+
+
+          <!-- Testimonials Section -->
+          <section class="py-20 bg-gradient-to-b from-white to-gray-50">
+            <div class="container mx-auto px-4">
+              <div class="text-center mb-16">
+                <span class="text-accent font-medium uppercase tracking-wider text-sm">Pengalaman Pasien</span>
+                <h2 class="text-4xl font-bold mb-3 mt-2">Apa Kata Mereka</h2>
+                <div class="w-24 h-1 bg-accent mx-auto mb-6"></div>
+                <p class="text-gray-600 max-w-2xl mx-auto text-lg">Dengarkan pengalaman nyata dari pasien yang telah mempercayakan kesehatan mereka kepada tim medis RS Aisyiyah Kendal.</p>
+              </div>
+
+              <div class="owl-carousel owl-theme testimonial-carousel">
+                <!-- Testimonial 1 -->
+                <div class="p-4">
+                  <div class="bg-white p-8 rounded-xl relative shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-accent">
+                    <div class="absolute -top-5 right-8 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                      <i class="fas fa-quote-right text-white"></i>
+                    </div>
+                    <div class="text-yellow-400 mb-4 flex text-lg">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6 text-lg leading-relaxed">"Pelayanan di RS Aisyiyah Kendal sangat memuaskan. Dokter dan perawat sangat profesional dan ramah. Fasilitas juga lengkap dan modern, membuat proses pengobatan menjadi lebih nyaman."</p>
+                    <div class="flex items-center pt-4 border-t border-gray-100">
+                      <img src="/api/placeholder/80/80" alt="Ahmad Rifai" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white shadow" />
+                      <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">Ahmad Rifai</h4>
+                        <p class="text-accent text-sm font-medium">Pasien Poli Jantung</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testimonial 2 -->
+                <div class="p-4">
+                  <div class="bg-white p-8 rounded-xl relative shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-accent">
+                    <div class="absolute -top-5 right-8 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                      <i class="fas fa-quote-right text-white"></i>
+                    </div>
+                    <div class="text-yellow-400 mb-4 flex text-lg">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6 text-lg leading-relaxed">"Saya sangat terkesan dengan sistem pendaftaran online yang mudah dan antrean yang tertib. Dokter memberikan penjelasan yang detail tentang kondisi kesehatan saya dan semua pemeriksaan selesai dengan efisien."</p>
+                    <div class="flex items-center pt-4 border-t border-gray-100">
+                      <img src="/api/placeholder/80/80" alt="Dewi Lestari" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white shadow" />
+                      <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">Dewi Lestari</h4>
+                        <p class="text-accent text-sm font-medium">Pasien Medical Check-up</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testimonial 3 -->
+                <div class="p-4">
+                  <div class="bg-white p-8 rounded-xl relative shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-accent">
+                    <div class="absolute -top-5 right-8 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                      <i class="fas fa-quote-right text-white"></i>
+                    </div>
+                    <div class="text-yellow-400 mb-4 flex text-lg">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6 text-lg leading-relaxed">"Ruang rawat inap sangat nyaman, bersih, dan tenang. Perawat selalu tersenyum dan responsif terhadap kebutuhan pasien. Makanan yang disajikan enak, bergizi, dan sesuai dengan diet yang direkomendasikan."</p>
+                    <div class="flex items-center pt-4 border-t border-gray-100">
+                      <img src="/api/placeholder/80/80" alt="Budi Hartono" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white shadow" />
+                      <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">Budi Hartono</h4>
+                        <p class="text-accent text-sm font-medium">Pasien Rawat Inap</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Testimonial 4 -->
+                <div class="p-4">
+                  <div class="bg-white p-8 rounded-xl relative shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-accent">
+                    <div class="absolute -top-5 right-8 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                      <i class="fas fa-quote-right text-white"></i>
+                    </div>
+                    <div class="text-yellow-400 mb-4 flex text-lg">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6 text-lg leading-relaxed">"Proses administrasi cepat dengan petugas yang sangat informatif. Dokter spesialisnya ramah dan menjelaskan dengan bahasa yang mudah dipahami. Ruang tunggunya juga nyaman dengan fasilitas yang memadai."</p>
+                    <div class="flex items-center pt-4 border-t border-gray-100">
+                      <img src="/api/placeholder/80/80" alt="Siti Rahayu" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white shadow" />
+                      <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">Siti Rahayu</h4>
+                        <p class="text-accent text-sm font-medium">Pasien Poli Anak</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                <!-- Testimonial 5 (Tambahan) -->
+                <div class="p-4">
+                  <div class="bg-white p-8 rounded-xl relative shadow-md hover:shadow-lg transition-all duration-300 border-t-4 border-accent">
+                    <div class="absolute -top-5 right-8 w-10 h-10 bg-accent rounded-full flex items-center justify-center">
+                      <i class="fas fa-quote-right text-white"></i>
+                    </div>
+                    <div class="text-yellow-400 mb-4 flex text-lg">
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                      <i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-gray-700 italic mb-6 text-lg leading-relaxed">"Sebagai pasien lansia, saya merasa sangat diperhatikan di RS Aisyiyah Kendal. Ada jalur khusus dan pendampingan untuk lansia. Dokter sangat sabar dalam menjelaskan pengobatan yang saya jalani."</p>
+                    <div class="flex items-center pt-4 border-t border-gray-100">
+                      <img src="/api/placeholder/80/80" alt="Haji Suparman" class="w-16 h-16 rounded-full object-cover mr-4 border-2 border-white shadow" />
+                      <div>
+                        <h4 class="font-semibold text-gray-800 text-lg">H. Suparman</h4>
+                        <p class="text-accent text-sm font-medium">Pasien Poli Geriatri</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Call to Action -->
+              <div class="text-center mt-12">
+                <a href="#share-testimonial" class="inline-flex items-center px-6 py-3 bg-accent text-white font-medium rounded-lg hover:bg-accent-dark transition-colors duration-300">
+                  <i class="fas fa-pen-alt mr-2"></i> Bagikan Pengalaman Anda
+                </a>
+              </div>
+            </div>
+          </section>
+
+
+
+              <!-- News Section -->
+          <section id="news" class="py-16 bg-light">
+              <div class="container mx-auto px-4">
+                  <div class="text-center mb-12">
+                      <h2 class="text-3xl font-bold mb-2">Berita & Artikel</h2>
+                      <div class="w-20 h-1 bg-accent mx-auto mb-6"></div>
+                      <p class="text-gray-600 max-w-2xl mx-auto">Berita terkini dan informasi kesehatan dari RS Aisyiyah Kendal.</p>
+                  </div>
+                  
+                  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                      <!-- News Card 1 -->
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                          <img src="img/berita/clininc jiwa.jpg" alt="Berita 1" class="w-full h-48 object-cover">
+                          <div class="p-6">
+                              <div class="flex items-center mb-4">
+                                  <div class="text-sm text-gray-500">
+                                      <i class="far fa-calendar-alt mr-2"></i>
+                                      10 Mei 2025
+                                  </div>
+                                  <div class="text-sm text-gray-500 ml-4">
+                                      <i class="far fa-user mr-2"></i>
+                                      Admin
+                                  </div>
+                              </div>
+                              <h3 class="text-xl font-semibold mb-3">Layanan Baru: Klinik Kesehatan Mental</h3>
+                              <p class="text-gray-600 mb-4">RS Aisyiyah Kendal meluncurkan layanan kesehatan mental terpadu untuk membantu pasien mengatasi masalah psikologis dengan pendekatan holistik.</p>
+                              <a href="#" class="text-primary font-medium hover:text-secondary">Baca Selengkapnya <i class="fas fa-arrow-right ml-1"></i></a>
+                          </div>
+                      </div>
+
+                      <!-- News Card 2 -->
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                          <img src="img/berita/flu.jpg" alt="Berita 2" class="w-full h-48 object-cover">
+                          <div class="p-6">
+                              <div class="flex items-center mb-4">
+                                  <div class="text-sm text-gray-500">
+                                      <i class="far fa-calendar-alt mr-2"></i>
+                                      5 Mei 2025
+                                  </div>
+                                  <div class="text-sm text-gray-500 ml-4">
+                                      <i class="far fa-user mr-2"></i>
+                                      Admin
+                                  </div>
+                              </div>
+                              <h3 class="text-xl font-semibold mb-3">Tips Menjaga Kesehatan di Musim Pancaroba</h3>
+                              <p class="text-gray-600 mb-4">Pelajari cara-cara efektif untuk tetap sehat dan terhindar dari penyakit saat pergantian musim yang kerap membawa berbagai virus dan bakteri.</p>
+                              <a href="#" class="text-primary font-medium hover:text-secondary">Baca Selengkapnya <i class="fas fa-arrow-right ml-1"></i></a>
+                          </div>
+                      </div>
+
+                      <!-- News Card 3 -->
+                      <div class="bg-white rounded-lg shadow-md overflow-hidden">
+                          <img src="img/berita/vaksin.jpg" alt="Berita 3" class="w-full h-48 object-cover">
+                          <div class="p-6">
+                              <div class="flex items-center mb-4">
+                                  <div class="text-sm text-gray-500">
+                                      <i class="far fa-calendar-alt mr-2"></i>
+                                      1 Mei 2025
+                                  </div>
+                                  <div class="text-sm text-gray-500 ml-4">
+                                      <i class="far fa-user mr-2"></i>
+                                      Admin
+                                  </div>
+                              </div>
+                              <h3 class="text-xl font-semibold mb-3">Program Vaksinasi Gratis untuk Lansia</h3>
+                              <p class="text-gray-600 mb-4">RS Aisyiyah Kendal bekerja sama dengan Dinas Kesehatan mengadakan program vaksinasi gratis bagi masyarakat lanjut usia di wilayah sekitar.</p>
+                              <a href="#" class="text-primary font-medium hover:text-secondary">Baca Selengkapnya <i class="fas fa-arrow-right ml-1"></i></a>
+                          </div>
+                      </div>
+                  </div>
+
+                  <div class="text-center mt-10">
+                      <a href="#" class="bg-primary text-white px-8 py-3 rounded-full font-medium hover:bg-secondary transition-colors duration-300 inline-block">Lihat Semua Berita</a>
+                  </div>
+              </div>
+          </section>
+
+          <!-- 
+                      
+                        <section id="feedback" class="py-16 bg-gradient-to-r from-primary to-secondary">
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col lg:flex-row items-center gap-10">
+                <div class="lg:w-1/2">
+                  <h2 class="text-3xl font-bold text-white mb-2">Sampaikan Masukan Anda</h2>
+                  <div class="w-20 h-1 bg-white mb-6"></div>
+                  <p class="text-white/90 mb-6">RS Aisyiyah Kendal selalu berkomitmen untuk meningkatkan kualitas layanan kami. Kritik, saran, dan masukan Anda sangat berharga bagi perbaikan pelayanan kesehatan kami.</p>
+
+                  <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm mb-6">
+                    <div class="flex flex-col space-y-4">
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <i class="fas fa-headset text-white"></i>
+                        </div>
+                        <div>
+                          <p class="text-white/70 text-sm">Customer Service</p>
+                          <p class="text-white font-medium">0800-1234-5678</p>
+                        </div>
+                      </div>
+                      
+                      <div class="flex items-center space-x-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+                          <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                          <p class="text-white/70 text-sm">Email</p>
+                          <p class="text-white font-medium">feedback@rsaisyiyahkendal.id</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm">
+                    <h4 class="text-white font-semibold mb-3">Komitmen Kami:</h4>
+                    <ul class="text-white/90 space-y-2">
+                      <li class="flex items-start">
+                        <i class="fas fa-check-circle text-white/80 mt-1 mr-2"></i>
+                        <span>Menindaklanjuti setiap masukan dalam 1x24 jam kerja</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fas fa-check-circle text-white/80 mt-1 mr-2"></i>
+                        <span>Menjaga kerahasiaan identitas pelapor</span>
+                      </li>
+                      <li class="flex items-start">
+                        <i class="fas fa-check-circle text-white/80 mt-1 mr-2"></i>
+                        <span>Evaluasi berkala untuk peningkatan layanan</span>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+
+                <div class="lg:w-1/2 mt-10 lg:mt-0">
+                  <div class="bg-white p-8 rounded-lg shadow-lg">
+                    <h3 class="text-xl font-semibold text-primary mb-6">Form Masukan dan Komplain</h3>
+
+                    <form>
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label class="block text-gray-700 text-sm font-medium mb-2" for="nama">Nama Lengkap</label>
+                          <input type="text" id="nama" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Masukkan nama lengkap" />
+                        </div>
+                        <div>
+                          <label class="block text-gray-700 text-sm font-medium mb-2" for="telepon">Nomor Telepon</label>
+                          <input type="tel" id="telepon" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Masukkan nomor telepon" />
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="email">Email</label>
+                        <input type="email" id="email" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" placeholder="Masukkan alamat email" />
+                      </div>
+
+                      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+                        <div>
+                          <label class="block text-gray-700 text-sm font-medium mb-2" for="jenis_masukan">Jenis Masukan</label>
+                          <select id="jenis_masukan" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="" selected disabled>Pilih Jenis</option>
+                            <option value="komplain">Komplain</option>
+                            <option value="saran">Saran/Ide</option>
+                            <option value="pujian">Pujian</option>
+                            <option value="pertanyaan">Pertanyaan</option>
+                          </select>
+                        </div>
+                        <div>
+                          <label class="block text-gray-700 text-sm font-medium mb-2" for="unit">Unit/Layanan Terkait</label>
+                          <select id="unit" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent">
+                            <option value="" selected disabled>Pilih Unit</option>
+                            <option value="pendaftaran">Pendaftaran</option>
+                            <option value="poli">Poliklinik</option>
+                            <option value="rawat_inap">Rawat Inap</option>
+                            <option value="igd">Instalasi Gawat Darurat</option>
+                            <option value="farmasi">Farmasi/Apotek</option>
+                            <option value="laboratorium">Laboratorium</option>
+                            <option value="radiologi">Radiologi</option>
+                            <option value="administrasi">Administrasi/Kasir</option>
+                            <option value="fasilitas">Fasilitas Umum</option>
+                            <option value="lainnya">Lainnya</option>
+                          </select>
+                        </div>
+                      </div>
+
+                      <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="tanggal_kejadian">Tanggal Kejadian (Jika Ada)</label>
+                        <input type="date" id="tanggal_kejadian" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent" />
+                      </div>
+
+                      <div class="mb-4">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="masukan">Isi Masukan/Komplain</label>
+                        <textarea
+                          id="masukan"
+                          rows="4"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          placeholder="Jelaskan secara detail masukan atau komplain Anda"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="saran">Saran Perbaikan</label>
+                        <textarea
+                          id="saran"
+                          rows="3"
+                          class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent"
+                          placeholder="Berikan saran untuk perbaikan layanan kami"
+                        ></textarea>
+                      </div>
+
+                      <div class="mb-6">
+                        <label class="block text-gray-700 text-sm font-medium mb-2" for="bukti">Unggah Bukti (Opsional)</label>
+                        <div class="flex items-center justify-center w-full">
+                          <label for="bukti" class="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+                            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                              <i class="fas fa-cloud-upload-alt text-gray-400 text-2xl mb-2"></i>
+                              <p class="mb-2 text-sm text-gray-500"><span class="font-semibold">Klik untuk unggah</span> atau seret dan lepas</p>
+                              <p class="text-xs text-gray-500">PNG, JPG atau PDF (Maks. 5MB)</p>
+                            </div>
+                            <input id="bukti" type="file" class="hidden" accept=".jpg,.jpeg,.png,.pdf" />
+                          </label>
+                        </div>
+                      </div>
+
+                      <div class="mb-6">
+                        <div class="flex items-start">
+                          <div class="flex items-center h-5">
+                            <input id="privasi" type="checkbox" class="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary" required />
+                          </div>
+                          <label for="privasi" class="ml-2 text-sm text-gray-600">
+                            Saya menyetujui <a href="#" class="text-primary hover:underline">kebijakan privasi</a> dan bersedia dihubungi untuk tindak lanjut
+                          </label>
+                        </div>
+                      </div>
+
+                      <button type="submit" class="w-full bg-primary text-white py-3 rounded-lg font-medium hover:bg-secondary transition-colors duration-300 flex items-center justify-center">
+                        <i class="fas fa-paper-plane mr-2"></i>
+                        Kirim Masukan
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section> -->
+
+                    <!-- Location Section -->
+          <section id="location" class="py-16 bg-gradient-to-r from-primary to-secondary">
+            <div class="container mx-auto px-4">
+              <div class="flex flex-col lg:flex-row items-center gap-12">
+                <div class="lg:w-1/2">
+                  <span class="text-white/80 font-medium uppercase tracking-wider text-sm mb-2 block">Temukan Kami</span>
+                  <h2 class="text-3xl font-bold text-white mb-2">Lokasi RS Aisyiyah Kendal</h2>
+                  <div class="w-20 h-1 bg-white mb-6"></div>
+                  <p class="text-white/90 mb-8">Kami berlokasi strategis di pusat kota Kendal dengan akses mudah dari berbagai arah. Kunjungi kami untuk mendapatkan layanan kesehatan terbaik.</p>
+
+                  <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm mb-6">
+                    <div class="flex flex-col space-y-5">
+                      <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <i class="fas fa-map-marker-alt text-white"></i>
+                        </div>
+                        <div>
+                          <p class="text-white/70 text-sm">Alamat</p>
+                          <p class="text-white font-medium mb-1">Jl. Soekarno-Hatta No. 123, Kendal</p>
+                          <p class="text-white/80 text-sm">Jawa Tengah, Indonesia 51312</p>
+                        </div>
+                      </div>
+                      
+                      <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <i class="fas fa-phone-alt text-white"></i>
+                        </div>
+                        <div>
+                          <p class="text-white/70 text-sm">Telepon</p>
+                          <p class="text-white font-medium">(0294) 123-4567</p>
+                        </div>
+                      </div>
+                      
+                      <div class="flex items-start space-x-4">
+                        <div class="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center flex-shrink-0 mt-1">
+                          <i class="fas fa-envelope text-white"></i>
+                        </div>
+                        <div>
+                          <p class="text-white/70 text-sm">Email</p>
+                          <p class="text-white font-medium">info@rsaisyiyahkendal.id</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="bg-white/10 p-6 rounded-lg backdrop-blur-sm">
+                    <h4 class="text-white font-semibold mb-4">Jam Operasional</h4>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      <div>
+                        <h5 class="text-white font-medium mb-2">IGD & Rawat Inap</h5>
+                        <p class="text-white/90">Buka 24 Jam</p>
+                        <p class="text-white/90">Setiap Hari</p>
+                      </div>
+                      <div>
+                        <h5 class="text-white font-medium mb-2">Poliklinik</h5>
+                        <p class="text-white/90">Senin - Jumat: 08.00 - 20.00</p>
+                        <p class="text-white/90">Sabtu: 08.00 - 17.00</p>
+                        <p class="text-white/90">Minggu: 09.00 - 14.00</p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="mt-8 flex flex-wrap gap-4">
+                    <a href="https://goo.gl/maps/abcdefg123456" target="_blank" class="bg-white text-primary px-5 py-3 rounded-lg font-medium hover:bg-white/90 transition-colors duration-300 flex items-center">
+                      <i class="fas fa-directions mr-2"></i>
+                      Petunjuk Arah
+                    </a>
+                    <a href="#feedback" class="bg-transparent border border-white text-white px-5 py-3 rounded-lg font-medium hover:bg-white/10 transition-colors duration-300 flex items-center">
+                      <i class="fas fa-comments mr-2"></i>
+                      Kirim Masukan
+                    </a>
+                  </div>
+                </div>
+
+                <div class="lg:w-1/2 mt-10 lg:mt-0">
+                  <div class="bg-white p-2 rounded-lg shadow-lg overflow-hidden">
+                    <!-- Responsive Map Container with 16:9 Aspect Ratio -->
+                    <div class="relative w-full pb-[56.25%] overflow-hidden rounded-lg">
+                      <!-- Google Maps Embed - Replace with actual Google Maps embed code -->
+                      <iframe 
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15842.95888354!2d110.1987453!3d-6.9187232!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zNsKwNTUnMDcuNSJTIDExMMKwMTEnNTUuNCJF!5e0!3m2!1sen!2sid!4v1620796148000!5m2!1sen!2sid" 
+                        class="absolute top-0 left-0 w-full h-full border-0" 
+                        allowfullscreen="" 
+                        loading="lazy"
+                        title="Lokasi RS Aisyiyah Kendal"
+                      ></iframe>
+                    </div>
+                    
+                    <!-- Transport Options below the map -->
+                    <div class="p-5">
+                      <h4 class="font-semibold text-primary text-lg mb-4">Cara Menuju RS Aisyiyah Kendal</h4>
+                      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        <div class="flex items-start space-x-3">
+                          <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-car text-primary"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-gray-800 mb-1">Kendaraan Pribadi</h5>
+                            <p class="text-gray-600 text-sm">10 menit dari Pusat Kota</p>
+                          </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                          <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-bus text-primary"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-gray-800 mb-1">Angkutan Umum</h5>
+                            <p class="text-gray-600 text-sm">Rute 01, 03, dan 05</p>
+                          </div>
+                        </div>
+                        
+                        <div class="flex items-start space-x-3">
+                          <div class="w-10 h-10 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-motorcycle text-primary"></i>
+                          </div>
+                          <div>
+                            <h5 class="font-medium text-gray-800 mb-1">Ojek Online</h5>
+                            <p class="text-gray-600 text-sm">Tersedia 24 Jam</p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <!-- Facilities Nearby -->
+                    <div class="px-5 pb-5">
+                      <div class="p-4 bg-gray-50 rounded-lg">
+                        <h5 class="font-medium text-gray-800 mb-2">Fasilitas Sekitar</h5>
+                        <div class="flex flex-wrap gap-2">
+                          <span class="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border border-gray-200 flex items-center">
+                            <i class="fas fa-parking text-primary/70 mr-1"></i> Area Parkir Luas
+                          </span>
+                          <span class="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border border-gray-200 flex items-center">
+                            <i class="fas fa-utensils text-primary/70 mr-1"></i> Food Court
+                          </span>
+                          <span class="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border border-gray-200 flex items-center">
+                            <i class="fas fa-pray text-primary/70 mr-1"></i> Mushola
+                          </span>
+                          <span class="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border border-gray-200 flex items-center">
+                            <i class="fas fa-shopping-cart text-primary/70 mr-1"></i> Mini Market
+                          </span>
+                          <span class="px-3 py-1 bg-white rounded-full text-xs text-gray-600 border border-gray-200 flex items-center">
+                            <i class="fas fa-wifi text-primary/70 mr-1"></i> WiFi Gratis
+                          </span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+</section>
+
+               
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- Professional Footer -->
+<footer class="bg-gray-900 text-white pt-16 pb-8">
+  <div class="container mx-auto px-4">
+    <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+      <div>
+        <h3 class="text-2xl font-bold mb-6 flex items-center">
+          <img src="img/Logo RSA Final Terbaik.png" alt="RS Aisyiyah Kendal" class="h-10 mr-2">
+          RS Aisyiyah Kendal
+        </h3>
+        <p class="text-gray-400 mb-6 leading-relaxed">
+          Rumah Sakit Aisyiyah Kendal memberikan pelayanan kesehatan terpadu dengan standar internasional untuk kenyamanan dan kesembuhan pasien.
+        </p>
+        <div class="flex space-x-4">
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fab fa-facebook-f text-lg"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fab fa-instagram text-lg"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fab fa-linkedin-in text-lg"></i>
+          </a>
+          <a href="#" class="text-gray-400 hover:text-white transition-colors">
+            <i class="fab fa-youtube text-lg"></i>
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-6 pb-2 border-b border-gray-700">Layanan</h4>
+        <ul class="space-y-3">
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-chevron-right text-xs mr-2 text-accent"></i> IGD 24 Jam
+          </a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-chevron-right text-xs mr-2 text-accent"></i> Rawat Inap
+          </a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-chevron-right text-xs mr-2 text-accent"></i> Medical Check Up
+          </a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-chevron-right text-xs mr-2 text-accent"></i> Radiologi
+          </a></li>
+          <li><a href="#" class="text-gray-400 hover:text-white transition-colors flex items-center">
+            <i class="fas fa-chevron-right text-xs mr-2 text-accent"></i> Laboratorium
+          </a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-6 pb-2 border-b border-gray-700">Kontak Kami</h4>
+        <ul class="space-y-4">
+          <li class="flex items-start">
+            <i class="fas fa-map-marker-alt text-accent mt-1 mr-3"></i>
+            <span class="text-gray-400">Jl. Kesehatan No. 123<br>Jakarta Selatan 12520</span>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-phone-alt text-accent mr-3"></i>
+            <span class="text-gray-400">(021) 1234-5678<br>Emergency: (021) 8765-4321</span>
+          </li>
+          <li class="flex items-center">
+            <i class="fas fa-envelope text-accent mr-3"></i>
+            <span class="text-gray-400">info@rsmedika.co.id<br>humas@rsmedika.co.id</span>
+          </li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="text-lg font-semibold mb-6 pb-2 border-b border-gray-700">Jam Operasional</h4>
+        <ul class="space-y-3 text-gray-400">
+          <li class="flex justify-between">
+            <span>Senin - Jumat</span>
+            <span>07:00 - 21:00</span>
+          </li>
+          <li class="flex justify-between">
+            <span>Sabtu</span>
+            <span>08:00 - 17:00</span>
+          </li>
+          <li class="flex justify-between">
+            <span>Minggu</span>
+            <span>09:00 - 15:00</span>
+          </li>
+          <li class="flex justify-between text-accent font-medium">
+            <span>IGD</span>
+            <span>24 Jam</span>
+          </li>
+        </ul>
+        
+        <div class="mt-8">
+          <h5 class="font-medium mb-3">Download Aplikasi Kami</h5>
+          <div class="flex space-x-2">
+            <a href="#" class="bg-black/30 hover:bg-black/50 transition-colors rounded-lg p-2 flex items-center">
+              <i class="fab fa-google-play text-xl mr-2"></i>
+              <div class="text-xs">
+                <div>GET IT ON</div>
+                <div class="font-bold">Google Play</div>
+              </div>
+            </a>
+            <a href="#" class="bg-black/30 hover:bg-black/50 transition-colors rounded-lg p-2 flex items-center">
+              <i class="fab fa-apple text-xl mr-2"></i>
+              <div class="text-xs">
+                <div>Download on the</div>
+                <div class="font-bold">App Store</div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 border-t border-gray-800 flex flex-col md:flex-row justify-between items-center">
+      <p class="text-gray-500 text-sm mb-4 md:mb-0">
+        &copy; 2023 RS Aisyiyah Kendal. All rights reserved.
+      </p>
+      <div class="flex space-x-6">
+        <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Kebijakan Privasi</a>
+        <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Syarat & Ketentuan</a>
+        <a href="#" class="text-gray-500 hover:text-white text-sm transition-colors">Sitemap</a>
+      </div>
+    </div>
+  </div>
+</footer>
+    </main>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Add .group class to slider for hover effects
+  $('.announcement-slider').addClass('group');
+  
+  // Initialize Progress Bar
+  let time = 7;
+  let $progressBar, $bar, $elem, isPause, tick, percentTime;
+  
+  // Initialize Owl Carousel for announcements
+  const announcementCarousel = $('.announcement-carousel').owlCarousel({
+    items: 1,
+    loop: true,
+    autoplay: true,
+    autoplayTimeout: time * 1000,
+    autoplayHoverPause: true,
+    nav: false,
+    dots: true,
+    dotsContainer: '.custom-dots',
+    animateOut: 'fadeOut',
+    smartSpeed: 1200,
+    onInitialized: function(event) {
+      // Create custom dots with thumbnails
+      let totalItems = event.item.count;
+      for (let i = 0; i < totalItems; i++) {
+        $('.custom-dots').append(`
+          <button class="dot-item w-3 h-3 md:w-4 md:h-4 rounded-full bg-white/40 hover:bg-white/60 transition-all duration-300 hover:scale-125" data-index="${i}"></button>
+        `);
+      }
+      $('.custom-dots .dot-item:first-child').addClass('active bg-white scale-125');
+      
+      // Update total slides counter
+      $('.total-slides').text(totalItems);
+      
+      // Initialize progress bar
+      startProgressBar();
+    },
+    onTranslate: function(event) {
+      // Reset progress bar when slide changes
+      resetProgressBar();
+    },
+    onTranslated: function(event) {
+      // Update slide counter
+      $('.current-slide').text(event.item.index - event.item.count + 1);
+      
+      // Update active dot
+      $('.custom-dots .dot-item').removeClass('active bg-white scale-125').addClass('bg-white/40');
+      $('.custom-dots .dot-item:eq(' + (event.item.index - event.item.count) + ')').addClass('active bg-white scale-125');
+      
+      // Restart progress bar
+      startProgressBar();
+    }
+  });
+  
+  // Custom Navigation with Hover Effects
+  $('.announcement-slider').hover(
+    function() {
+      $('.announcement-prev, .announcement-next').addClass('opacity-100');
+    },
+    function() {
+      $('.announcement-prev, .announcement-next').removeClass('opacity-100');
+    }
+  );
+  
+  $('.announcement-prev').click(function() {
+    announcementCarousel.trigger('prev.owl.carousel');
+  });
+  
+  $('.announcement-next').click(function() {
+    announcementCarousel.trigger('next.owl.carousel');
+  });
+  
+  // Custom dot click
+  $(document).on('click', '.dot-item', function() {
+    let slideIndex = $(this).data('index');
+    announcementCarousel.trigger('to.owl.carousel', [slideIndex, 300]);
+  });
+  
+  // Progress Bar Functions
+  function startProgressBar() {
+    // Reset timer
+    percentTime = 0;
+    isPause = false;
+    
+    // Run interval every 30ms
+    tick = setInterval(interval, 30);
+    
+    function interval() {
+      if (isPause === false) {
+        percentTime += 30 / (time * 10);
+        
+        $('.slider-progress-bar').css({
+          width: percentTime + "%"
+        });
+        
+        // Complete slide duration
+        if (percentTime >= 100) {
+          announcementCarousel.trigger('next.owl.carousel');
+          resetProgressBar();
+        }
+      }
+    }
+  }
+  
+  function resetProgressBar() {
+    clearTimeout(tick);
+    $('.slider-progress-bar').css({
+      width: 0 + "%"
+    });
+    percentTime = 0;
+  }
+  
+  // Pause carousel on hover
+  $('.announcement-slider').hover(
+    function() {
+      isPause = true;
+    },
+    function() {
+      isPause = false;
+    }
+  );
+  
+  // Add animation effects to slides
+  $('.announcement-carousel .item').each(function() {
+    $(this).addClass('overflow-hidden');
+  });
+  
+  // Add smooth hover effects for content
+  $('.announcement-carousel h3, .announcement-carousel p').hover(
+    function() {
+      $(this).addClass('text-accent transition-colors duration-300');
+    },
+    function() {
+      $(this).removeClass('text-accent');
+    }
+  );
+});
+
+
+$(document).ready(function(){
+  $('.testimonial-carousel').owlCarousel({
+    loop: true,
+    margin: 24,
+    nav: true,
+    navText: [
+      '<i class="fas fa-chevron-left text-accent"></i>',
+      '<i class="fas fa-chevron-right text-accent"></i>'
+    ],
+    dots: true,
+    autoplay: true,
+    autoplayTimeout: 6000,
+    autoplayHoverPause: true,
+    responsive: {
+      0: {
+        items: 1
+      },
+      768: {
+        items: 2
+      },
+      1024: {
+        items: 3
+      }
+    },
+    onInitialized: function() {
+      // Add custom class to nav buttons
+      $('.owl-nav button').addClass('w-10 h-10 rounded-full bg-white shadow-md flex items-center justify-center absolute top-1/2 transform -translate-y-1/2');
+      $('.owl-nav button.owl-prev').css('left', '-20px');
+      $('.owl-nav button.owl-next').css('right', '-20px');
+    }
+  });
+});
+
+
+ document.addEventListener('alpine:init', () => {
+    Alpine.data('profileData', () => ({
+      activeTab: 'general-info',
+      
+      init() {
+        // Cek parameter URL saat halaman dimuat
+        const urlParams = new URLSearchParams(window.location.search);
+        const tabParam = urlParams.get('tab');
+        
+        // Jika parameter tab ada, gunakan sebagai tab aktif
+        if (tabParam) {
+          this.activeTab = tabParam;
+        }
+      }
+    }))
+  });
+</script>
+  </body>
+</html>
